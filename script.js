@@ -30,7 +30,7 @@ function renderPokemonCard(pokemon) {
     container.innerHTML += `
         <div class="col">
             <div class="card p-2 text-center shadow-sm" data-url="${pokemon.url}">
-                <img class="pokemon-image" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
+                <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
                 <h5 class="card-title text-capitalize">${pokemon.name}</h5>
                 <p>ID: ${id}</p>
             </div>

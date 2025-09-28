@@ -26,11 +26,11 @@ function renderPokemonCard(pokemon) {
     let id = pokemon.url.split("/")[pokemon.url.split("/").length - 2];
     let imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 
-    const container = document.getElementById("pokemonContainer");
+    let container = document.getElementById("pokemonContainer");
     container.innerHTML += `
         <div class="col">
             <div class="card p-2 text-center shadow-sm" data-url="${pokemon.url}">
-                <img src="${imgUrl}" alt="${pokemon.name}">
+                <img src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
                 <h5 class="card-title text-capitalize">${pokemon.name}</h5>
                 <p>ID: ${id}</p>
             </div>

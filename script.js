@@ -51,7 +51,7 @@ async function renderPokemonCard(pokemon) {
     let container = document.getElementById("pokemonContainer");
     container.innerHTML += `
         <div class="col pokemon-card">
-            <div class="p-2 text-center shadow-sm" style="background-color:${details.bgColor}" data-url="${pokemon.url}">
+            <div class="p-2 text-center shadow-sm rounded-3" style="background-color:${details.bgColor}" data-url="${pokemon.url}">
                 <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
                 <h5 class="card-title text-capitalize">${pokemon.name}</h5>
                 <p>ID: ${id}</p>

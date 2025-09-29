@@ -22,17 +22,20 @@ async function loadPokemon() {  //fetche basis url nur mit den ersten 20
     }
 }
 
-function renderPokemonCard(pokemon) {
+async function renderPokemonCard(pokemon) {
     let id = pokemon.url.split("/")[pokemon.url.split("/").length - 2];
     let imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+    let details = await getPokemonDetails(pokemon);
 
     let container = document.getElementById("pokemonContainer");
     container.innerHTML += `
         <div class="col">
-            <div class="card p-2 text-center shadow-sm" data-url="${pokemon.url}">
+            <div class="card p-2 text-center shadow-sm style="background-color:${details.bgColor}" data-url="${pokemon.url}">
                 <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
                 <h5 class="card-title text-capitalize">${pokemon.name}</h5>
                 <p>ID: ${id}</p>
+                <p>Typ: ${details.types.join(", ")}</p>
             </div>
         </div>
     `;

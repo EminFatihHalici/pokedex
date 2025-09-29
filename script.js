@@ -48,16 +48,19 @@ async function renderPokemonCard(pokemon) {
 
     let details = await getPokemonDetails(pokemon);
 
+    let typeHtml = renderTypes(details.types);
+
     let container = document.getElementById("pokemonContainer");
     container.innerHTML += `
         <div class="col pokemon-card">
-            <div class="p-2 text-center shadow-sm rounded-3" style="background-color:${details.bgColor}" data-url="${pokemon.url}">
-                <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
-                <h5 class="card-title text-capitalize">${pokemon.name}</h5>
-                <p>ID: ${id}</p>
-                <p>Typ: ${details.types.join(", ")}</p>
-            </div>
+        <div class="card p-2 text-center shadow-sm rounded-3 position-relative" 
+             style="background-color:${details.bgColor}" data-url="${pokemon.url}">
+            <span class="pokemon-id position-absolute top-0 end-0 m-2">#${id}</span>
+            <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
+            <h5 class="card-title text-capitalize">${pokemon.name}</h5>
+            <div class="pokemon-types">${typeHtml}</div>
         </div>
+    </div>
     `;
 }
 
@@ -80,4 +83,14 @@ async function getPokemonDetails(pokemon) {
     return {
         types, bgColor
     };
+}
+
+function renderTypes(types) {
+    let html = "";
+    for (let i = 0; i < types.length; i++) {
+        let type = types[i];
+        let color = typeColors[type] || "#AAA";
+        html += `<span class="pokemon-type" style="background-color:${color}">${type}</span>`;
+    }
+    return html;
 }

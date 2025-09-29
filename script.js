@@ -4,6 +4,26 @@ function onloadFunc() {
     loadPokemon();
 }
 
+let typeColors = {
+    grass: "#78C850",
+    fire: "#F08030",
+    water: "#6890F0",
+    electric: "#F8D030",
+    bug: "#A8B820",
+    normal: "#A8A878",
+    poison: "#A040A0",
+    ground: "#E0C068",
+    fairy: "#EE99AC",
+    fighting: "#C03028",
+    psychic: "#F85888",
+    rock: "#B8A038",
+    ghost: "#705898",
+    ice: "#98D8D8",
+    dragon: "#7038F8",
+    dark: "#705848",
+    steel: "#B8B8D0"
+};
+
 async function loadPokemon() {  //fetche basis url nur mit den ersten 20
     try {
         let response = await fetch(BASE_URL);
@@ -31,7 +51,7 @@ async function renderPokemonCard(pokemon) {
     let container = document.getElementById("pokemonContainer");
     container.innerHTML += `
         <div class="col">
-            <div class="card p-2 text-center shadow-sm style="background-color:${details.bgColor}" data-url="${pokemon.url}">
+            <div class="card p-2 text-center shadow-sm" style="background-color:${details.bgColor}" data-url="${pokemon.url}">
                 <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
                 <h5 class="card-title text-capitalize">${pokemon.name}</h5>
                 <p>ID: ${id}</p>
@@ -44,7 +64,16 @@ async function renderPokemonCard(pokemon) {
 async function getPokemonDetails(pokemon) {
     let response = await fetch(pokemon.url);
     let data = await response.json();
-    let types = data.types.map(t => t.types.name);
+
+    let types = [];
+    if (data.types) {
+        for (let i = 0; i < data.types.length; i++) {
+            if (data.types[i].type && data.types[i].type.name) {
+                types.push(data.types[i].type.name);
+            }
+        }
+    }
+
     let mainType = types[0];
     let bgColor = typeColors[mainType] || "#AAA";
 

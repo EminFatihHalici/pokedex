@@ -1,5 +1,3 @@
-const BASE_URL = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
-
 function onloadFunc() {
     loadPokemon();
 }
@@ -24,17 +22,20 @@ let typeColors = {
     steel: "#B8B8D0"
 };
 
+let offset = 0;
+
 async function loadPokemon() {  //fetche basis url nur mit den ersten 20
     try {
-        let response = await fetch(BASE_URL);
+        let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
         let data = await response.json();
         let pokemonList = data.results;
-        console.log("List loaded:", data);
 
         for (let i = 0; i < pokemonList.length; i++) {
             let pokemon = pokemonList[i];
             renderPokemonCard(pokemon);
         }
+
+        offset += 20;
 
     } catch (error) {
         console.error("Failure", error);
@@ -92,4 +93,10 @@ function renderTypes(types) {
         html += `<span class="pokemon-type" style="background-color:${color}">${type}</span>`;
     }
     return html;
+}
+
+async function loadMorePokemon() {
+    document.getElementById("spinner").style.display = "block";
+    await loadPokemon();
+    document.getElementById("spinner").style.display = "none";
 }

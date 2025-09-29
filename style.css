@@ -11,6 +11,10 @@ h1 {
     color: #6610f2 !important;
 }
 
+.load-btn {
+    color: rgba(33, 37, 41, 0.75) !important;
+}
+
 .card:hover {
     cursor: pointer;
 }

@@ -96,7 +96,9 @@ function renderTypes(types) {
 }
 
 async function loadMorePokemon() {
-    document.getElementById("spinner").style.display = "block";
+    document.getElementById("overlay").style.display = "flex";
     await loadPokemon();
-    document.getElementById("spinner").style.display = "none";
+    setTimeout(() => {
+        document.getElementById("overlay").style.display = "none";
+    }, 500);    
 }

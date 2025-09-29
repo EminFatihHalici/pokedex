@@ -38,3 +38,14 @@ function renderPokemonCard(pokemon) {
     `;
 }
 
+async function getPokemonDetails(pokemon) {
+    let response = await fetch(pokemon.url);
+    let data = await response.json();
+    let types = data.types.map(t => t.types.name);
+    let mainType = types[0];
+    let bgColor = typeColors[mainType] || "#AAA";
+
+    return {
+        types, bgColor
+    };
+}

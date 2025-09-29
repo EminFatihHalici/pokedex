@@ -76,10 +76,9 @@ async function getPokemonDetails(pokemon) {
             }
         }
     }
-
+    
     let mainType = types[0];
     let bgColor = typeColors[mainType] || "#AAA";
-
     return {
         types, bgColor
     };

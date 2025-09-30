@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./styles/assets.css">
     <link rel="stylesheet" href="./styles/standard.css">
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="/styles/big-card.css">
     <link rel="stylesheet" href="./styles/spinner.css">
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
     <script src="./script.js" defer></script>
@@ -16,7 +17,7 @@
 </head>
 
 <body onload="onloadFunc()">
-<div class="overlay-big-card d_none" onclick="toggleBigCard()" id="bigCard">
+<div class="overlay-big-card d_none" onclick="closeBigCard(event)" id="bigCard">
     <div class="overlay-template-position">
         <div class="big-card-template"  onclick="dialogPrevention(event)" id="bigCardTemplate"></div>
     </div>

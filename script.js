@@ -77,7 +77,7 @@ async function getPokemonDetails(pokemon) {
             }
         }
     }
-    
+
     let mainType = types[0];
     let bgColor = typeColors[mainType] || "#AAA";
     return {
@@ -100,5 +100,15 @@ async function loadMorePokemon() {
     await loadPokemon();
     setTimeout(() => {
         document.getElementById("overlay").style.display = "none";
-    }, 500);    
+    }, 500);
+}
+
+function toggleOff() {
+    let overlayRef = document.getElementById("bigCard")
+
+    overlayRef.classList.toggle("d_none")
+}
+
+function dialogPrevention(event) {
+  event.stopPropagation();
 }

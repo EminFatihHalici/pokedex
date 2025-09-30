@@ -104,8 +104,11 @@ async function loadMorePokemon() {
     }, 500);
 }
 
-function closeBigCard() {
-    document.getElementById("bigCard").classList.add("d_none");
+function closeBigCard(event) {
+    if (!event || event.target.id === "bigCard") {
+        document.getElementById("bigCard").classList.add("d_none");
+        document.body.classList.remove("noscroll");
+    }
 }
 
 function dialogPrevention(event) {
@@ -113,7 +116,7 @@ function dialogPrevention(event) {
 }
 
 function showBigCard(id, name, imgUrl, types, bgColor, url) {
-    let typeArray = Array.isArray(types) ? types : types.split(",");
+    let typeArray = Array.isArray(types) ? types : types.split(",");   
     let typeHtml = renderTypes(typeArray);
 
     document.getElementById("bigCardTemplate").innerHTML = `
@@ -122,8 +125,10 @@ function showBigCard(id, name, imgUrl, types, bgColor, url) {
             <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${name}">
             <h2 class="text-capitalize">${name}</h2>
             <div class="pokemon-types">${typeHtml}</div>
+           
         </div>
     `;
-document.getElementById("bigCard").classList.remove("d_none");
+    document.getElementById("bigCard").classList.remove("d_none");
+    document.body.classList.add("noscroll");
 
 }

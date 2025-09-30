@@ -55,7 +55,8 @@ async function renderPokemonCard(pokemon) {
     container.innerHTML += `
         <div class="col pokemon-card">
         <div class="card p-2 text-center shadow-sm rounded-3 position-relative" 
-             style="background-color:${details.bgColor}" data-url="${pokemon.url}">
+             style="background-color:${details.bgColor}" data-url="${pokemon.url}"
+             onclick="showBigCard('${id}', '${pokemon.name}', '${imgUrl}', '${details.types.join(",")}', '${details.bgColor}', '${pokemon.url}')">
             <span class="pokemon-id position-absolute top-0 end-0 m-2">#${id}</span>
             <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
             <h5 class="card-title text-capitalize">${pokemon.name}</h5>
@@ -103,12 +104,26 @@ async function loadMorePokemon() {
     }, 500);
 }
 
-function toggleOff() {
-    let overlayRef = document.getElementById("bigCard")
-
-    overlayRef.classList.toggle("d_none")
+function closeBigCard() {
+    document.getElementById("bigCard").classList.add("d_none");
 }
 
 function dialogPrevention(event) {
-  event.stopPropagation();
+    event.stopPropagation();
+}
+
+function showBigCard(id, name, imgUrl, types, bgColor, url) {
+    let typeArray = Array.isArray(types) ? types : types.split(",");
+    let typeHtml = renderTypes(typeArray);
+
+    document.getElementById("bigCardTemplate").innerHTML = `
+    <div class="card p-4 text-center shadow-lg rounded-3 position-relative" style="background-color:${bgColor}">
+            <span class="pokemon-id position-absolute top-0 end-0 m-2">#${id}</span>
+            <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${name}">
+            <h2 class="text-capitalize">${name}</h2>
+            <div class="pokemon-types">${typeHtml}</div>
+        </div>
+    `;
+document.getElementById("bigCard").classList.remove("d_none");
+
 }

@@ -141,14 +141,16 @@ async function showBigCard(id, name, imgUrl, types, bgColor, url) {
     `;
 
     document.getElementById("bigCardTemplate").innerHTML = `
-    <div class="card p-4 text-center shadow-lg rounded-3 position-relative" style="background-color:${bgColor}">
-            <span class="pokemon-id position-absolute top-0 end-0 m-2">#${id}</span>
-            <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${name}">
-            <h2 class="text-capitalize">${name}</h2>
-            <div class="pokemon-types">${typeHtml}</div>
-            <div class="text-start">${statsHtml}</div>
-           
-        </div>
+   <div class="card shadow-lg p-4 text-center position-relative mx-auto" 
+         style="background-color:${bgColor}; max-width: 600px; width: 100%;">
+        <span class="pokemon-id position-absolute top-0 end-0 m-2">#${id}</span>
+        <img class="pokemon-image mx-auto d-block mb-3" src="${imgUrl}" alt="${name}" style="max-height: 250px;">
+        <h2 class="text-capitalize mb-3">${name}</h2>
+        <div class="pokemon-types mb-4 d-flex justify-content-center gap-2">${typeHtml}</div>
+        <h4 class="mb-2">Stats</h4>
+        <div class="text-start">${statsHtml}</div>
+        <button class="btn mt-3 w-100" onclick="closeBigCard()">Close</button>
+    </div>
     `;
     document.getElementById("bigCard").classList.remove("d_none");
     document.body.classList.add("noscroll");
@@ -160,9 +162,12 @@ function renderStat(name, value, color) {
     let percent = Math.min(value, 100);
     return `
         <div class="mb-2">
-            <small><strong>${name}:</strong> ${value}</small>
-            <div class="progress" style="height: 12px;">
-                <div class="progress-bar bg-${color}" role="progressbar" style="width: ${percent}%"></div>
+           <div class="d-flex justify-content-between">
+                <small><strong>${name}</strong></small>
+                <small>${value}</small>
+            </div>
+            <div class="progress rounded-pill" style="height: 12px;">
+                <div class="progress-bar bg-$gress-bar bg-${color}" role="progressbar" style="width: ${percent}%"></div>
             </div>
         </div>
     `;

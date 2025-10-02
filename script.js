@@ -146,8 +146,6 @@ async function showBigCard(id, name, imgUrl, types, bgColor, url) {
             <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${name}">
             <h2 class="text-capitalize">${name}</h2>
             <div class="pokemon-types">${typeHtml}</div>
-
-            <h4 class="mb-2">Stats</h4>
             <div class="text-start">${statsHtml}</div>
            
         </div>

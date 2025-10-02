@@ -126,9 +126,19 @@ function dialogPrevention(event) {
     event.stopPropagation();
 }
 
-function showBigCard(id, name, imgUrl, types, bgColor, url) {
+async function showBigCard(id, name, imgUrl, types, bgColor, url) {
     let typeArray = Array.isArray(types) ? types : types.split(",");
     let typeHtml = renderTypes(typeArray);
+
+    let stats = await getPokemonStats(url);
+    let statsHtml = `
+        ${renderStat("HP", stats.hp, "success")}
+        ${renderStat("Attack", stats.attack, "danger")}
+        ${renderStat("Defense", stats.defense, "primary")}
+        ${renderStat("Sp. Atk", stats["special-attack"], "warning")}
+        ${renderStat("Sp. Def", stats["special-defense"], "info")}
+        ${renderStat("Speed", stats.speed, "dark")}
+    `;
 
     document.getElementById("bigCardTemplate").innerHTML = `
     <div class="card p-4 text-center shadow-lg rounded-3 position-relative" style="background-color:${bgColor}">
@@ -136,6 +146,9 @@ function showBigCard(id, name, imgUrl, types, bgColor, url) {
             <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${name}">
             <h2 class="text-capitalize">${name}</h2>
             <div class="pokemon-types">${typeHtml}</div>
+
+            <h4 class="mb-2">Stats</h4>
+            <div class="text-start">${statsHtml}</div>
            
         </div>
     `;
@@ -145,3 +158,14 @@ function showBigCard(id, name, imgUrl, types, bgColor, url) {
 }
 
 
+function renderStat(name, value, color) {
+    let percent = Math.min(value, 100);
+    return `
+        <div class="mb-2">
+            <small><strong>${name}:</strong> ${value}</small>
+            <div class="progress" style="height: 12px;">
+                <div class="progress-bar bg-${color}" role="progressbar" style="width: ${percent}%"></div>
+            </div>
+        </div>
+    `;
+}

@@ -86,6 +86,17 @@ async function getPokemonDetails(pokemon) {
     };
 }
 
+async function getPokemonStats(pokemonUrl) {
+    let response = await fetch(pokemonUrl);
+    let data = await response.json();
+
+    let stats = {};
+    data.stats.forEach(s => {
+        stats[s.stat.name] = s.base_stat;
+    });
+    return stats;
+}
+
 function renderTypes(types) {
     let html = "";
     for (let i = 0; i < types.length; i++) {
@@ -116,7 +127,7 @@ function dialogPrevention(event) {
 }
 
 function showBigCard(id, name, imgUrl, types, bgColor, url) {
-    let typeArray = Array.isArray(types) ? types : types.split(",");   
+    let typeArray = Array.isArray(types) ? types : types.split(",");
     let typeHtml = renderTypes(typeArray);
 
     document.getElementById("bigCardTemplate").innerHTML = `
@@ -132,3 +143,5 @@ function showBigCard(id, name, imgUrl, types, bgColor, url) {
     document.body.classList.add("noscroll");
 
 }
+
+

@@ -23,6 +23,8 @@ let typeColors = {
 };
 
 let offset = 0;
+let allPokemons = [];
+let currentIndex = 0;
 
 async function loadPokemon() {  //fetche basis url nur mit den ersten 20
     try {
@@ -156,6 +158,13 @@ async function showBigCard(id, name, imgUrl, types, bgColor, url) {
     document.body.classList.add("noscroll");
 
 }
+
+async function showBigCardByIndex(index) {
+    currentIndex = index;
+    let p = allPokemons[index];
+    await showBigCard(p.id, p.name, p.imgUrl, p.types, p.bgColor, p.url);
+}
+
 
 
 function renderStat(name, value, color) {

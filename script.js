@@ -53,6 +53,17 @@ async function renderPokemonCard(pokemon) {
 
     let typeHtml = renderTypes(details.types);
 
+      allPokemons.push({
+        id,
+        name: pokemon.name,
+        imgUrl,
+        types: details.types,
+        bgColor: details.bgColor,
+        url: pokemon.url
+    });
+
+    let index = allPokemons.length - 1;
+
     let container = document.getElementById("pokemonContainer");
     container.innerHTML += `
         <div class="col pokemon-card">
@@ -151,7 +162,11 @@ async function showBigCard(id, name, imgUrl, types, bgColor, url) {
         <div class="pokemon-types mb-4 d-flex justify-content-center gap-2">${typeHtml}</div>
         <h4 class="mb-2">Stats</h4>
         <div class="text-start">${statsHtml}</div>
-        <button class="btn mt-3 w-100" onclick="closeBigCard()">Close</button>
+       <div class="d-flex justify-content-between mt-3">
+            <button class="btn btn-outline-light" onclick="prevCard()">⬅️</button>
+            <button class="btn btn-dark" onclick="closeBigCard()">Close</button>
+            <button class="btn btn-outline-light" onclick="nextCard()">➡️</button>
+        </div>
     </div>
     `;
     document.getElementById("bigCard").classList.remove("d_none");
@@ -170,14 +185,24 @@ async function showBigCardByIndex(index) {
 function renderStat(name, value, color) {
     let percent = Math.min(value, 100);
     return `
-        <div class="mb-2">
+         <div class="mb-2">
            <div class="d-flex justify-content-between">
                 <small><strong>${name}</strong></small>
                 <small>${value}</small>
             </div>
             <div class="progress rounded-pill" style="height: 12px;">
-                <div class="progress-bar bg-$gress-bar bg-${color}" role="progressbar" style="width: ${percent}%"></div>
+                <div class="progress-bar bg-${color}" role="progressbar" style="width: ${percent}%"></div>
             </div>
         </div>
     `;
+}
+
+function nextCard() {
+    currentIndex = (currentIndex + 1) % allPokemons.length;
+    showBigCardByIndex(currentIndex);
+}
+
+function prevCard() {
+    currentIndex = (currentIndex - 1 + allPokemons.length) % allPokemons.length;
+    showBigCardByIndex(currentIndex);
 }

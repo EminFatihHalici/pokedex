@@ -135,8 +135,8 @@ async function showBigCard(id, name, imgUrl, types, bgColor, url) {
         ${renderStat("HP", stats.hp, "success")}
         ${renderStat("Attack", stats.attack, "danger")}
         ${renderStat("Defense", stats.defense, "primary")}
-        ${renderStat("Sp. Atk", stats["special-attack"], "warning")}
-        ${renderStat("Sp. Def", stats["special-defense"], "info")}
+        ${renderStat("Special Atk", stats["special-attack"], "warning")}
+        ${renderStat("Special Def", stats["special-defense"], "info")}
         ${renderStat("Speed", stats.speed, "dark")}
     `;
 

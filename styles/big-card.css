@@ -19,8 +19,23 @@ body.noscroll {
 }
 
 .big-card-template .card {
-    width: 100% !important;
-    max-width: 600px !important;
-    border-radius: 15px;
-    overflow: hidden;
+   width: 100%;
+    transition: transform 0.3s ease; 
+}
+
+.big-card-template .pokemon-image {
+    max-height: 250px;
+    margin-bottom: 1rem;
+}
+
+.big-card-template .pokemon-types span {
+    margin-right: 0.5rem;
+    margin-bottom: 0.25rem;
+    display: inline-block;
+}
+
+.overlay-template-position {
+    width: 100%;
+    max-width: 900px;
+    padding: 1rem;
 }

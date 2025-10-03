@@ -65,18 +65,8 @@ async function renderPokemonCard(pokemon) {
     let index = allPokemons.length - 1;
 
     let container = document.getElementById("pokemonContainer");
-    container.innerHTML += `
-        <div class="col pokemon-card">
-        <div class="card p-2 text-center shadow-sm rounded-3 position-relative" 
-             style="background-color:${details.bgColor}" data-url="${pokemon.url}"
-             onclick="showBigCard('${id}', '${pokemon.name}', '${imgUrl}', '${details.types.join(",")}', '${details.bgColor}', '${pokemon.url}')">
-            <span class="pokemon-id position-absolute top-0 end-0 m-2">#${id}</span>
-            <img class="pokemon-image mx-auto d-block" src="${imgUrl}" alt="${pokemon.name}" loading="lazy">
-            <h5 class="card-title text-capitalize">${pokemon.name}</h5>
-            <div class="pokemon-types">${typeHtml}</div>
-        </div>
-    </div>
-    `;
+    container.innerHTML += getPokemonCardsHTML(p);
+       
 }
 
 async function getPokemonDetails(pokemon) {
@@ -206,3 +196,5 @@ function prevCard() {
     currentIndex = (currentIndex - 1 + allPokemons.length) % allPokemons.length;
     showBigCardByIndex(currentIndex);
 }
+
+

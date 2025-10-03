@@ -17,11 +17,11 @@
 </head>
 
 <body onload="onloadFunc()">
-<div class="overlay-big-card d_none" onclick="closeBigCard(event)" id="bigCard">
-    <div class="overlay-template-position">
-        <div class="big-card-template"  onclick="dialogPrevention(event)" id="bigCardTemplate"></div>
+    <div class="overlay-big-card d_none" onclick="closeBigCard(event)" id="bigCard">
+        <div class="overlay-template-position">
+            <div class="big-card-template" onclick="dialogPrevention(event)" id="bigCardTemplate"></div>
+        </div>
     </div>
-</div>
 
     <header class="p-3">
         <div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center">
@@ -33,8 +33,9 @@
                 <h1 class="h4 mb-0">Pokedex</h1>
             </div>
 
-            <form class="d-flex" role="search">
-                <input type="text" class="form-control me-2" placeholder="Search Pokemon..." aria-label="Search">
+            <form class="d-flex" role="search" onsubmit="event.preventDefault(); searchPokemon()">
+                <input type="text" id="searchInput" class="form-control me-2" placeholder="Search Pokemon..."
+                    aria-label="Search">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
             </form>
 
@@ -52,12 +53,12 @@
     </main>
 
     <div class="d-grid gap-2 col-6 mx-auto my-3">
-                <button type="button" onclick="loadMorePokemon()" class="btn btn-outline-warning load-btn">Load more</button>
-     </div>
+        <button type="button" onclick="loadMorePokemon()" class="btn btn-outline-warning load-btn">Load more</button>
+    </div>
 
-        <div id="overlay">
-            <div class="spinner"></div>
-        </div>
+    <div id="overlay">
+        <div class="spinner"></div>
+    </div>
 </body>
 
 <footer class="py-3 mt-auto">

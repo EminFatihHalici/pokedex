@@ -3,3 +3,27 @@
     width: 150px;
     object-fit: contain;
 }
+
+footer img {
+    max-height: 80px;
+    height: auto;
+    width: auto;
+}
+
+header img {
+    max-height: 100px;
+    height: auto;
+    width: auto;
+}
+
+header h1, header h2 {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    margin: 0.5rem 0;
+    text-align: center;
+}
+
+footer p {
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
+    text-align: center;
+    margin: 0.5rem 0;
+}

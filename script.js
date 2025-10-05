@@ -207,31 +207,28 @@ function searchPokemon() {
     let input = document.getElementById('searchInput').value.toLowerCase().trim();
     let container = document.getElementById('pokemonContainer');
     let loadBtn = document.getElementById('loadMoreBtn');
-
     if (input.length === 0) {
         renderAllPokemons(allPokemons);
         loadBtn.style.display = "block";
         return;
     }
-
     if (input.length < 3) {
-        container.innerHTML = `<div class="alert alert-info text-center w-50 mx-auto mt-3 shadow-sm">
+        container.innerHTML = `<div class="alert alert-info text-center w-75 mx-auto mt-3 shadow-sm"
+                 style="font-size: clamp(1rem, 4vw, 1.5rem)">
                 🔎 Please enter at least 3 letters.
             </div>`;
         loadBtn.style.display = "none";
         return;
     }
-
     let filtered = allPokemons.filter(p => p.name.toLowerCase().includes(input));
-
     if (filtered.length === 0) {
-        container.innerHTML = `<div class="alert alert-danger text-center w-50 mx-auto mt-3 shadow-sm">
+        container.innerHTML = `<div class="alert alert-danger text-center w-75 mx-auto mt-3 shadow-sm"
+                 style="font-size: clamp(1rem, 4vw, 1.5rem)">
                 ❌ No Pokemon found.
             </div>`;
         loadBtn.style.display = "none";
         return;
     }
-
     renderAllPokemons(filtered);
 }
 

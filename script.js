@@ -1,6 +1,11 @@
 function onloadFunc() {
     loadPokemon();
+    let searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+        searchPokemon();
+    });
 }
+
 
 let typeColors = {
     grass: "#78C850",
@@ -53,7 +58,7 @@ async function renderPokemonCard(pokemon) {
 
     let typeHtml = renderTypes(details.types);
 
-      allPokemons.push({
+    allPokemons.push({
         id,
         name: pokemon.name,
         imgUrl,
@@ -66,7 +71,7 @@ async function renderPokemonCard(pokemon) {
 
     let container = document.getElementById("pokemonContainer");
     container.innerHTML += getPokemonCardHTML(allPokemons[index]);
-       
+
 }
 
 async function getPokemonDetails(pokemon) {
@@ -198,3 +203,35 @@ function prevCard() {
 }
 
 
+function searchPokemon() {
+    let input = document.getElementById('searchInput').value.toLowerCase().trim();
+    let container = document.getElementById('pokemonContainer');
+
+    if (input.length === 0) {
+        renderAllPokemons(allPokemons);
+        return;
+    }
+
+    if (input.length < 3) {
+        container.innerHTML = `<p class="text-muted mt-3">🔎 At least 3 letters.</p>`;
+        return;
+    }
+
+    let filtered = allPokemons.filter(p => p.name.toLowerCase().includes(input));
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<p class="text-danger mt-3">❌ Not found</p>`;
+        return;
+    }
+
+    renderAllPokemons(filtered);
+}
+
+function renderAllPokemons(list) {
+    const container = document.getElementById('pokemonContainer');
+    container.innerHTML = '';
+
+    list.forEach(p => {
+        container.innerHTML += getPokemonCardHTML(p);
+    });
+}

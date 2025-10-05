@@ -65,7 +65,7 @@ async function renderPokemonCard(pokemon) {
     let index = allPokemons.length - 1;
 
     let container = document.getElementById("pokemonContainer");
-    container.innerHTML += getPokemonCardsHTML(p);
+    container.innerHTML += getPokemonCardHTML(allPokemons[index]);
        
 }
 

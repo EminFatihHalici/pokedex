@@ -30,17 +30,20 @@ let allPokemons = [];
 let currentIndex = 0;
 
 async function loadPokemon() {  //fetche basis url nur mit den ersten 20
-       try {
-        let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
-        let data = await response.json();
+ try{
+        let res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
+        let data = await res.json();
         for (let i = 0; i < data.results.length; i++) {
             await renderPokemonCard(data.results[i]);
         }
         offset += 20;
-    } catch (error) {
-        console.error("Failure", error);
+        allPokemons.sort((a, b) => a.id - b.id);
+        renderAllPokemons(allPokemons);
+    } catch (e) {
+        console.error("Failure", e);
     }
-}
+    }
+
 
 async function renderPokemonCard(pokemon) {
     let id = pokemon.url.split("/")[pokemon.url.split("/").length - 2];
@@ -133,10 +136,10 @@ async function formatStats(url){
     `;
 }
 
-async function showBigCardByIndex(index) {
-    currentIndex = index;
-    let p = allPokemons[index];
-    await showBigCard(p.id, p.name, p.imgUrl, p.types, p.bgColor, p.url);
+async function showBigCardByIndex(index){
+    currentIndex=index;
+    let p=allPokemons[index];
+    await showBigCard(p.id,p.name,p.imgUrl,p.types,p.bgColor,p.url);
 }
 
 function renderStat(name, value, color) {
@@ -189,11 +192,13 @@ function filterPokemons(input){
     return allPokemons.filter(p=>p.name.toLowerCase().includes(input));
 }
 
-function renderAllPokemons(list) {
-    const container = document.getElementById('pokemonContainer');
-    container.innerHTML = '';
+function renderAllPokemons(list){
+    const container=document.getElementById('pokemonContainer');
+    container.innerHTML='';
+    list.forEach(p=>container.innerHTML+=getPokemonCardHTML(p));
+}
 
-    list.forEach(p => {
-        container.innerHTML += getPokemonCardHTML(p);
-    });
+function openCardById(id) {
+    const index = allPokemons.findIndex(p => p.id === Number(id));
+    if (index !== -1) showBigCardByIndex(index);
 }

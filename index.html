@@ -16,63 +16,63 @@
     <title>Pokedex</title>
 </head>
 
-
 <body onload="onloadFunc()">
 
-<div id="mainWrapper">
-    <div class="overlay-big-card d_none" onclick="closeBigCard(event)" id="bigCard">
-        <div class="overlay-template-position">
-            <div class="big-card-template" onclick="dialogPrevention(event)" id="bigCardTemplate"></div>
+    <div id="mainWrapper">
+        <div class="overlay-big-card d_none" onclick="closeBigCard(event)" id="bigCard">
+            <div class="overlay-template-position">
+                <div class="big-card-template" onclick="dialogPrevention(event)" id="bigCardTemplate"></div>
+            </div>
         </div>
-    </div>
 
-    <header class="p-3">
-        <div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center">
+        <header class="p-3">
+            <div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center">
 
-            <div class="d-flex align-items-center mb-2 mb-md-0">
-                <a href="./index.html" class="d-flex align-items-center text-decoration-none">
-                    <img src="./assets/pokeball_icon.png" alt="Logo" width="40" height="40" class="me-2">
+                <div class="d-flex align-items-center mb-2 mb-md-0">
+                    <a href="./index.html" class="d-flex align-items-center text-decoration-none">
+                        <img src="./assets/pokeball_icon.png" alt="Logo" width="40" height="40" class="me-2">
+                    </a>
+                    <h1 class="h4 mb-0">Pokedex</h1>
+                </div>
+
+                <form class="d-flex" role="search" onsubmit="event.preventDefault(); searchPokemon()">
+                    <input type="text" id="searchInput" class="form-control me-2" placeholder="Search Pokemon..."
+                        aria-label="Search">
+                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+                </form>
+
+            </div>
+        </header>
+
+        <main>
+
+            <div class="container text-center">
+                <div id="pokemonContainer" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+
+                </div>
+            </div>
+
+        </main>
+
+        <div class="d-grid gap-2 col-6 mx-auto my-3">
+            <button type="button" id="loadMoreBtn" onclick="loadMorePokemon()"
+                class="btn btn-outline-warning load-btn">Load
+                more</button>
+        </div>
+
+        <div id="overlay">
+            <div class="spinner"></div>
+        </div>
+
+        <footer class="py-3 mt-auto">
+            <div class="container text-center">
+                <a href="./index.html" class="d-flex align-items-center justify-content-center">
+                    <img src="./assets/pokeball_icon.png" alt="Logo-Footer" width="24" height="24" class="me-2">
                 </a>
-                <h1 class="h4 mb-0">Pokedex</h1>
+                <p class="mb-0 text-muted">© 2025 - E.F.H aka Master of Pokemon</p>
             </div>
-
-            <form class="d-flex" role="search" onsubmit="event.preventDefault(); searchPokemon()">
-                <input type="text" id="searchInput" class="form-control me-2" placeholder="Search Pokemon..."
-                    aria-label="Search">
-                <button class="btn btn-outline-secondary" type="submit">Search</button>
-            </form>
-
-        </div>
-    </header>
-
-    <main>
-
-        <div class="container text-center">
-            <div id="pokemonContainer" class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-
-            </div>
-        </div>
-
-    </main>
-
-    <div class="d-grid gap-2 col-6 mx-auto my-3">
-        <button type="button" id="loadMoreBtn" onclick="loadMorePokemon()" class="btn btn-outline-warning load-btn">Load
-            more</button>
+        </footer>
     </div>
-
-    <div id="overlay">
-        <div class="spinner"></div>
-    </div>
-
-    <footer class="py-3 mt-auto">
-        <div class="container text-center">
-            <a href="./index.html" class="d-flex align-items-center justify-content-center">
-                <img src="./assets/pokeball_icon.png" alt="Logo-Footer" width="24" height="24" class="me-2">
-            </a>
-            <p class="mb-0 text-muted">© 2025 - E.F.H aka Master of Pokemon</p>
-        </div>
-    </footer>
-</div>
 
 </body>
 

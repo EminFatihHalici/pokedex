@@ -45,3 +45,15 @@ h1 {
     font-weight: 500;
     background-color: #ffc107 !important;
 }
+
+#pokemonContainer {
+    margin-top: 1rem; 
+}
+
+#loadMoreBtn {
+    display: block;
+    margin: 2rem auto 3rem auto;
+    font-size: 1.1rem;
+    padding: 0.6rem 1.2rem;
+}
+

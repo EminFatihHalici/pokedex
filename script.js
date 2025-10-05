@@ -6,7 +6,6 @@ function onloadFunc() {
     });
 }
 
-
 let typeColors = {
     grass: "#78C850",
     fire: "#F08030",
@@ -26,7 +25,6 @@ let typeColors = {
     dark: "#705848",
     steel: "#B8B8D0"
 };
-
 let offset = 0;
 let allPokemons = [];
 let currentIndex = 0;
@@ -65,14 +63,7 @@ async function renderPokemonCard(pokemon) {
 async function getPokemonDetails(pokemon) {
     let response = await fetch(pokemon.url);
     let data = await response.json();
-    let types = [];
-    if (data.types) {
-        for (let i = 0; i < data.types.length; i++) {
-            if (data.types[i].type && data.types[i].type.name) {
-                types.push(data.types[i].type.name);
-            }
-        }
-    }
+    let types =data.types?.map(t => t.type?.name).filter(Boolean) || [];
     let mainType = types[0];
     let bgColor = typeColors[mainType] || "#AAA";
     return {
@@ -119,44 +110,37 @@ function dialogPrevention(event) {
     event.stopPropagation();
 }
 
-async function showBigCard(id, name, imgUrl, types, bgColor, url) {
-    let typeArray = Array.isArray(types) ? types : types.split(",");
-    let typeHtml = renderTypes(typeArray);
-    let stats = await getPokemonStats(url);
-    let statsHtml = `
-        ${renderStat("HP", stats.hp, "success")}
-        ${renderStat("Attack", stats.attack, "danger")}
-        ${renderStat("Defense", stats.defense, "primary")}
-        ${renderStat("Special Atk", stats["special-attack"], "warning")}
-        ${renderStat("Special Def", stats["special-defense"], "info")}
-        ${renderStat("Speed", stats.speed, "dark")}
-    `;
-    document.getElementById("bigCardTemplate").innerHTML = `
-   <div class="card shadow-lg p-4 text-center position-relative mx-auto" 
-         style="background-color:${bgColor}; max-width: 600px; width: 100%;">
-        <span class="pokemon-id position-absolute top-0 end-0 m-2">#${id}</span>
-        <img class="pokemon-image mx-auto d-block mb-3" src="${imgUrl}" alt="${name}" style="max-height: 250px;">
-        <h2 class="text-capitalize mb-3">${name}</h2>
-        <div class="pokemon-types mb-4 d-flex justify-content-center gap-2">${typeHtml}</div>
-        <h4 class="mb-2">Stats</h4>
-        <div class="text-start">${statsHtml}</div>
-       <div class="d-flex justify-content-between mt-3">
-            <button class="btn btn-outline-light" onclick="prevCard()">⬅️</button>
-            <button class="btn btn-dark" onclick="closeBigCard()">Close</button>
-            <button class="btn btn-outline-light" onclick="nextCard()">➡️</button>
-        </div>
-    </div>
-    `;
+async function showBigCard(id,name,imgUrl,types,bgColor,url){
+    let typeHtml = formatTypes(types);
+    let statsHtml = await formatStats(url);
+    document.getElementById("bigCardTemplate").innerHTML =
+        buildBigCardHTML({id,name,imgUrl,bgColor,typeHtml,statsHtml});
     document.getElementById("bigCard").classList.remove("d_none");
     document.body.classList.add("noscroll");
 }
+
+function formatTypes(types){
+    let arr = Array.isArray(types)?types:types.split(",");
+    return renderTypes(arr);
+}
+
+async function formatStats(url){
+    let s = await getPokemonStats(url);
+    return `
+      ${renderStat("HP",s.hp,"success")}
+      ${renderStat("Attack",s.attack,"danger")}
+      ${renderStat("Defense",s.defense,"primary")}
+      ${renderStat("Special Atk",s["special-attack"],"warning")}
+      ${renderStat("Special Def",s["special-defense"],"info")}
+      ${renderStat("Speed",s.speed,"dark")}
+    `;
+}
+
 async function showBigCardByIndex(index) {
     currentIndex = index;
     let p = allPokemons[index];
     await showBigCard(p.id, p.name, p.imgUrl, p.types, p.bgColor, p.url);
 }
-
-
 
 function renderStat(name, value, color) {
     let percent = Math.min(value, 100);
@@ -183,34 +167,29 @@ function prevCard() {
     showBigCardByIndex(currentIndex);
 }
 
-
-function searchPokemon() {
-    let input = document.getElementById('searchInput').value.toLowerCase().trim();
-    let container = document.getElementById('pokemonContainer');
-    let loadBtn = document.getElementById('loadMoreBtn');
-    if (input.length === 0) {
-        renderAllPokemons(allPokemons);
-        loadBtn.style.display = "block";
-        return;
-    }
-    if (input.length < 3) {
-        container.innerHTML = `<div class="alert alert-info text-center w-75 mx-auto mt-5 shadow-sm"
-                 style="font-size: clamp(1rem, 4vw, 1.5rem)">
-                🔎 Please enter at least 3 letters.
-            </div>`;
-        loadBtn.style.display = "none";
-        return;
-    }
-    let filtered = allPokemons.filter(p => p.name.toLowerCase().includes(input));
-    if (filtered.length === 0) {
-        container.innerHTML = `<div class="alert alert-danger text-center w-75 mx-auto mt-5 shadow-sm"
-                 style="font-size: clamp(1rem, 4vw, 1.5rem)">
-                ❌ No Pokemon found.
-            </div>`;
-        loadBtn.style.display = "none";
-        return;
-    }
+function searchPokemon(){
+    const input = getSearchInput();
+    const container = document.getElementById('pokemonContainer');
+    const loadBtn = document.getElementById('loadMoreBtn');
+    if(input.length===0){ renderAllPokemons(allPokemons); loadBtn.style.display="block"; return; }
+    if(input.length<3){ showAlert("🔎 Please enter at least 3 letters","info"); loadBtn.style.display="none"; return; }
+    const filtered = filterPokemons(input);
+    if(filtered.length===0){ showAlert("❌ No Pokemon found","danger"); loadBtn.style.display="none"; return; }
     renderAllPokemons(filtered);
+}
+
+function getSearchInput(){
+    return document.getElementById('searchInput').value.toLowerCase().trim();
+}
+
+function showAlert(msg,type){
+    document.getElementById('pokemonContainer').innerHTML =
+        `<div class="alert alert-${type} text-center w-75 mx-auto mt-5 shadow-sm"
+              style="font-size: clamp(1rem, 4vw, 1.5rem)">${msg}</div>`;
+}
+
+function filterPokemons(input){
+    return allPokemons.filter(p=>p.name.toLowerCase().includes(input));
 }
 
 function renderAllPokemons(list) {

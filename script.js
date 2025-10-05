@@ -51,11 +51,8 @@ async function renderPokemonCard(pokemon) {
     let id = pokemon.url.split("/")[pokemon.url.split("/").length - 2];
     let imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
     let details = await getPokemonDetails(pokemon);
-    let typeHtml = renderTypes(details.types);
     allPokemons.push({
-        id,
-        name: pokemon.name,
-        imgUrl,
+        id,name: pokemon.name,imgUrl,
         types: details.types,
         bgColor: details.bgColor,
         url: pokemon.url

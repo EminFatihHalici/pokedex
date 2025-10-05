@@ -30,18 +30,15 @@ let allPokemons = [];
 let currentIndex = 0;
 
 async function loadPokemon() {  //fetche basis url nur mit den ersten 20
-    try {
+       try {
         let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
         let data = await response.json();
-        let pokemonList = data.results;
-        for (let i = 0; i < pokemonList.length; i++) {
-            let pokemon = pokemonList[i];
-            renderPokemonCard(pokemon);
+        for (let i = 0; i < data.results.length; i++) {
+            await renderPokemonCard(data.results[i]);
         }
         offset += 20;
     } catch (error) {
         console.error("Failure", error);
-        return [];
     }
 }
 

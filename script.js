@@ -206,21 +206,29 @@ function prevCard() {
 function searchPokemon() {
     let input = document.getElementById('searchInput').value.toLowerCase().trim();
     let container = document.getElementById('pokemonContainer');
+    let loadBtn = document.getElementById('loadMoreBtn');
 
     if (input.length === 0) {
         renderAllPokemons(allPokemons);
+        loadBtn.style.display = "block";
         return;
     }
 
     if (input.length < 3) {
-        container.innerHTML = `<p class="text-muted mt-3">🔎 At least 3 letters.</p>`;
+        container.innerHTML = `<div class="alert alert-info text-center w-50 mx-auto mt-3 shadow-sm">
+                🔎 Please enter at least 3 letters.
+            </div>`;
+        loadBtn.style.display = "none";
         return;
     }
 
     let filtered = allPokemons.filter(p => p.name.toLowerCase().includes(input));
 
     if (filtered.length === 0) {
-        container.innerHTML = `<p class="text-danger mt-3">❌ Not found</p>`;
+        container.innerHTML = `<div class="alert alert-danger text-center w-50 mx-auto mt-3 shadow-sm">
+                ❌ No Pokemon found.
+            </div>`;
+        loadBtn.style.display = "none";
         return;
     }
 

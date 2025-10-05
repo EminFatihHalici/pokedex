@@ -36,14 +36,11 @@ async function loadPokemon() {  //fetche basis url nur mit den ersten 20
         let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
         let data = await response.json();
         let pokemonList = data.results;
-
         for (let i = 0; i < pokemonList.length; i++) {
             let pokemon = pokemonList[i];
             renderPokemonCard(pokemon);
         }
-
         offset += 20;
-
     } catch (error) {
         console.error("Failure", error);
         return [];
@@ -53,11 +50,8 @@ async function loadPokemon() {  //fetche basis url nur mit den ersten 20
 async function renderPokemonCard(pokemon) {
     let id = pokemon.url.split("/")[pokemon.url.split("/").length - 2];
     let imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-
     let details = await getPokemonDetails(pokemon);
-
     let typeHtml = renderTypes(details.types);
-
     allPokemons.push({
         id,
         name: pokemon.name,
@@ -66,18 +60,14 @@ async function renderPokemonCard(pokemon) {
         bgColor: details.bgColor,
         url: pokemon.url
     });
-
     let index = allPokemons.length - 1;
-
     let container = document.getElementById("pokemonContainer");
     container.innerHTML += getPokemonCardHTML(allPokemons[index]);
-
 }
 
 async function getPokemonDetails(pokemon) {
     let response = await fetch(pokemon.url);
     let data = await response.json();
-
     let types = [];
     if (data.types) {
         for (let i = 0; i < data.types.length; i++) {
@@ -86,7 +76,6 @@ async function getPokemonDetails(pokemon) {
             }
         }
     }
-
     let mainType = types[0];
     let bgColor = typeColors[mainType] || "#AAA";
     return {
@@ -97,7 +86,6 @@ async function getPokemonDetails(pokemon) {
 async function getPokemonStats(pokemonUrl) {
     let response = await fetch(pokemonUrl);
     let data = await response.json();
-
     let stats = {};
     data.stats.forEach(s => {
         stats[s.stat.name] = s.base_stat;
@@ -137,7 +125,6 @@ function dialogPrevention(event) {
 async function showBigCard(id, name, imgUrl, types, bgColor, url) {
     let typeArray = Array.isArray(types) ? types : types.split(",");
     let typeHtml = renderTypes(typeArray);
-
     let stats = await getPokemonStats(url);
     let statsHtml = `
         ${renderStat("HP", stats.hp, "success")}
@@ -147,7 +134,6 @@ async function showBigCard(id, name, imgUrl, types, bgColor, url) {
         ${renderStat("Special Def", stats["special-defense"], "info")}
         ${renderStat("Speed", stats.speed, "dark")}
     `;
-
     document.getElementById("bigCardTemplate").innerHTML = `
    <div class="card shadow-lg p-4 text-center position-relative mx-auto" 
          style="background-color:${bgColor}; max-width: 600px; width: 100%;">
@@ -166,9 +152,7 @@ async function showBigCard(id, name, imgUrl, types, bgColor, url) {
     `;
     document.getElementById("bigCard").classList.remove("d_none");
     document.body.classList.add("noscroll");
-
 }
-
 async function showBigCardByIndex(index) {
     currentIndex = index;
     let p = allPokemons[index];
@@ -213,7 +197,7 @@ function searchPokemon() {
         return;
     }
     if (input.length < 3) {
-        container.innerHTML = `<div class="alert alert-info text-center w-75 mx-auto mt-3 shadow-sm"
+        container.innerHTML = `<div class="alert alert-info text-center w-75 mx-auto mt-5 shadow-sm"
                  style="font-size: clamp(1rem, 4vw, 1.5rem)">
                 🔎 Please enter at least 3 letters.
             </div>`;
@@ -222,7 +206,7 @@ function searchPokemon() {
     }
     let filtered = allPokemons.filter(p => p.name.toLowerCase().includes(input));
     if (filtered.length === 0) {
-        container.innerHTML = `<div class="alert alert-danger text-center w-75 mx-auto mt-3 shadow-sm"
+        container.innerHTML = `<div class="alert alert-danger text-center w-75 mx-auto mt-5 shadow-sm"
                  style="font-size: clamp(1rem, 4vw, 1.5rem)">
                 ❌ No Pokemon found.
             </div>`;

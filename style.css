@@ -57,3 +57,9 @@ h1 {
     padding: 0.6rem 1.2rem;
 }
 
+#searchInput:hover,
+#loadMoreBtn:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}

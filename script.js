@@ -30,7 +30,7 @@ let allPokemons = [];
 let currentIndex = 0;
 
 async function loadPokemon() {  //fetche basis url nur mit den ersten 20
- try{
+    try {
         let res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
         let data = await res.json();
         for (let i = 0; i < data.results.length; i++) {
@@ -42,7 +42,7 @@ async function loadPokemon() {  //fetche basis url nur mit den ersten 20
     } catch (e) {
         console.error("Failure", e);
     }
-    }
+}
 
 
 async function renderPokemonCard(pokemon) {
@@ -50,7 +50,7 @@ async function renderPokemonCard(pokemon) {
     let imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
     let details = await getPokemonDetails(pokemon);
     allPokemons.push({
-        id,name: pokemon.name,imgUrl,
+        id, name: pokemon.name, imgUrl,
         types: details.types,
         bgColor: details.bgColor,
         url: pokemon.url
@@ -63,7 +63,7 @@ async function renderPokemonCard(pokemon) {
 async function getPokemonDetails(pokemon) {
     let response = await fetch(pokemon.url);
     let data = await response.json();
-    let types =data.types?.map(t => t.type?.name).filter(Boolean) || [];
+    let types = data.types?.map(t => t.type?.name).filter(Boolean) || [];
     let mainType = types[0];
     let bgColor = typeColors[mainType] || "#AAA";
     return {
@@ -110,36 +110,36 @@ function dialogPrevention(event) {
     event.stopPropagation();
 }
 
-async function showBigCard(id,name,imgUrl,types,bgColor,url){
+async function showBigCard(id, name, imgUrl, types, bgColor, url) {
     let typeHtml = formatTypes(types);
     let statsHtml = await formatStats(url);
     document.getElementById("bigCardTemplate").innerHTML =
-        buildBigCardHTML({id,name,imgUrl,bgColor,typeHtml,statsHtml});
+        buildBigCardHTML({ id, name, imgUrl, bgColor, typeHtml, statsHtml });
     document.getElementById("bigCard").classList.remove("d_none");
     document.body.classList.add("noscroll");
 }
 
-function formatTypes(types){
-    let arr = Array.isArray(types)?types:types.split(",");
+function formatTypes(types) {
+    let arr = Array.isArray(types) ? types : types.split(",");
     return renderTypes(arr);
 }
 
-async function formatStats(url){
+async function formatStats(url) {
     let s = await getPokemonStats(url);
     return `
-      ${renderStat("HP",s.hp,"success")}
-      ${renderStat("Attack",s.attack,"danger")}
-      ${renderStat("Defense",s.defense,"primary")}
-      ${renderStat("Special Atk",s["special-attack"],"warning")}
-      ${renderStat("Special Def",s["special-defense"],"info")}
-      ${renderStat("Speed",s.speed,"dark")}
+      ${renderStat("HP", s.hp, "success")}
+      ${renderStat("Attack", s.attack, "danger")}
+      ${renderStat("Defense", s.defense, "primary")}
+      ${renderStat("Special Atk", s["special-attack"], "warning")}
+      ${renderStat("Special Def", s["special-defense"], "info")}
+      ${renderStat("Speed", s.speed, "dark")}
     `;
 }
 
-async function showBigCardByIndex(index){
-    currentIndex=index;
-    let p=allPokemons[index];
-    await showBigCard(p.id,p.name,p.imgUrl,p.types,p.bgColor,p.url);
+async function showBigCardByIndex(index) {
+    currentIndex = index;
+    let p = allPokemons[index];
+    await showBigCard(p.id, p.name, p.imgUrl, p.types, p.bgColor, p.url);
 }
 
 function renderStat(name, value, color) {
@@ -158,47 +158,56 @@ function renderStat(name, value, color) {
 }
 
 function nextCard() {
-    currentIndex = (currentIndex + 1) % allPokemons.length;
-    showBigCardByIndex(currentIndex);
+    if (currentIndex < allPokemons.length - 1) {
+        currentIndex++;
+        showBigCardByIndex(currentIndex);
+    }
 }
 
 function prevCard() {
-    currentIndex = (currentIndex - 1 + allPokemons.length) % allPokemons.length;
-    showBigCardByIndex(currentIndex);
+     if (currentIndex > 0) {
+        currentIndex--;
+        showBigCardByIndex(currentIndex);
+    }
 }
 
-function searchPokemon(){
+function searchPokemon() {
     const input = getSearchInput();
     const container = document.getElementById('pokemonContainer');
     const loadBtn = document.getElementById('loadMoreBtn');
-    if(input.length===0){ renderAllPokemons(allPokemons); loadBtn.style.display="block"; return; }
-    if(input.length<3){ showAlert("🔎 Please enter at least 3 letters","info"); loadBtn.style.display="none"; return; }
+    if (input.length === 0) { renderAllPokemons(allPokemons); loadBtn.style.display = "block"; return; }
+    if (input.length < 3) { showAlert("🔎 Please enter at least 3 letters", "info"); loadBtn.style.display = "none"; return; }
     const filtered = filterPokemons(input);
-    if(filtered.length===0){ showAlert("❌ No Pokemon found","danger"); loadBtn.style.display="none"; return; }
+    if (filtered.length === 0) { showAlert("❌ No Pokemon found", "danger"); loadBtn.style.display = "none"; return; }
     renderAllPokemons(filtered);
 }
 
-function getSearchInput(){
+function getSearchInput() {
     return document.getElementById('searchInput').value.toLowerCase().trim();
 }
 
-function showAlert(msg,type){
+function showAlert(msg, type) {
     document.getElementById('pokemonContainer').innerHTML =
         `<div class="alert alert-${type} text-center w-75 mx-auto mt-5 shadow-sm"
               style="font-size: clamp(1rem, 4vw, 1.5rem)">${msg}</div>`;
 }
 
-function filterPokemons(input){
-    return allPokemons.filter(p=>p.name.toLowerCase().includes(input));
+function filterPokemons(input) {
+    return allPokemons.filter(p => p.name.toLowerCase().includes(input));
 }
 
-function renderAllPokemons(list){
-    const container=document.getElementById('pokemonContainer');
-    container.innerHTML='';
-    list.forEach(p=>container.innerHTML+=getPokemonCardHTML(p));
+function renderAllPokemons(list) {
+    let container = document.getElementById('pokemonContainer');
+    container.innerHTML = '';
+    list.forEach(p => container.innerHTML += getPokemonCardHTML(p));
 }
 
 function openCardById(id) {
-    const index = allPokemons.findIndex(p => p.id === Number(id));
-    if (index !== -1) showBigCardByIndex(index);
+    let container = document.getElementById('overlay');
+    let pokemonIndex = allPokemons.findIndex(p => p.id === id);
+    if (pokemonIndex === -1) return;
+
+    currentIndex = pokemonIndex;
+    showBigCardByIndex(currentIndex);
+    container.style.display = 'flex';
 }

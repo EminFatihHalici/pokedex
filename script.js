@@ -88,7 +88,7 @@ function openCardById(id) {
     let numId = Number(id);
      let pokemonIndex = allPokemons.findIndex(p => Number(p.id) === numId);
     if (pokemonIndex === -1) return;
-    currentIndex =  pokemon.arrayIndex;
+    currentIndex =  pokemonIndex;
     showBigCardByIndex(currentIndex);
     container.style.display = 'flex';
 }

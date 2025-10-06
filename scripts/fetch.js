@@ -45,6 +45,9 @@ async function loadMorePokemon() {
 }
 
 async function showBigCard(id, name, imgUrl, types, bgColor, url) {
+    const numId = Number(id);
+    const idx = allPokemons.findIndex(p => Number(p.id) === numId);
+    if (idx !== -1) currentIndex = idx;
     let typeHtml = formatTypes(types);
     let statsHtml = await formatStats(url);
     document.getElementById("bigCardTemplate").innerHTML =

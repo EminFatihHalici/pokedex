@@ -36,9 +36,11 @@ async function getPokemonStats(pokemonUrl) {
 
 async function loadMorePokemon() {
     document.getElementById("overlay").style.display = "flex";
+    document.body.classList.add("noscroll");
     await loadPokemon();
     setTimeout(() => {
         document.getElementById("overlay").style.display = "none";
+        document.body.classList.remove("noscroll");
     }, 500);
 }
 

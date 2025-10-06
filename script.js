@@ -1,11 +1,3 @@
-function onloadFunc() {
-    loadPokemon();
-    let searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', () => {
-        searchPokemon();
-    });
-}
-
 let typeColors = {
     grass: "#78C850",
     fire: "#F08030",
@@ -28,6 +20,14 @@ let typeColors = {
 let offset = 0;
 let allPokemons = [];
 let currentIndex = 0;
+
+function onloadFunc() {
+    loadPokemon();
+    let searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', () => {
+        searchPokemon();
+    });
+}
 
 function closeBigCard(event) {
     if (!event || event.target.id === "bigCard") {

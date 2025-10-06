@@ -1,4 +1,4 @@
-async function loadPokemon() {  //fetche basis url nur mit den ersten 20
+async function loadPokemon() {
     try {
         let res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`);
         let data = await res.json();

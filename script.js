@@ -46,17 +46,16 @@ function formatTypes(types) {
 }
 
 function nextCard() {
-    if (currentIndex < allPokemons.length - 1) {
-        currentIndex++;
-        showBigCardByIndex(currentIndex);
-    }
+    if (allPokemons.length === 0) return;
+    currentIndex = (currentIndex + 1) % allPokemons.length;
+    showBigCardByIndex(currentIndex);
 }
 
+
 function prevCard() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        showBigCardByIndex(currentIndex);
-    }
+    if (allPokemons.length === 0) return;
+    currentIndex = (currentIndex - 1 + allPokemons.length) % allPokemons.length;
+    showBigCardByIndex(currentIndex);
 }
 
 function searchPokemon() {
@@ -86,9 +85,10 @@ function filterPokemons(input) {
 
 function openCardById(id) {
     let container = document.getElementById('overlay');
-    let pokemonIndex = allPokemons.findIndex(p => p.id === id);
+    let numId = Number(id);
+     let pokemonIndex = allPokemons.findIndex(p => Number(p.id) === numId);
     if (pokemonIndex === -1) return;
-    currentIndex = pokemonIndex;
+    currentIndex =  pokemon.arrayIndex;
     showBigCardByIndex(currentIndex);
     container.style.display = 'flex';
 }

@@ -67,6 +67,6 @@ async function formatStats(url) {
 
 async function showBigCardByIndex(index) {
     currentIndex = index;
-    let p = allPokemons[index];
+    let p = allPokemons[currentIndex];
     await showBigCard(p.id, p.name, p.imgUrl, p.types, p.bgColor, p.url);
 }

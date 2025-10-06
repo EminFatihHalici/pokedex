@@ -37,27 +37,11 @@ async function loadPokemon() {  //fetche basis url nur mit den ersten 20
             await renderPokemonCard(data.results[i]);
         }
         offset += 20;
-        allPokemons.sort((a, b) => a.id - b.id);
+        allPokemons.sort((a, b) => Number(a.id) - Number(b.id));
         renderAllPokemons(allPokemons);
     } catch (e) {
         console.error("Failure", e);
     }
-}
-
-
-async function renderPokemonCard(pokemon) {
-    let id = pokemon.url.split("/")[pokemon.url.split("/").length - 2];
-    let imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-    let details = await getPokemonDetails(pokemon);
-    allPokemons.push({
-        id, name: pokemon.name, imgUrl,
-        types: details.types,
-        bgColor: details.bgColor,
-        url: pokemon.url
-    });
-    let index = allPokemons.length - 1;
-    let container = document.getElementById("pokemonContainer");
-    container.innerHTML += getPokemonCardHTML(allPokemons[index]);
 }
 
 async function getPokemonDetails(pokemon) {
@@ -79,16 +63,6 @@ async function getPokemonStats(pokemonUrl) {
         stats[s.stat.name] = s.base_stat;
     });
     return stats;
-}
-
-function renderTypes(types) {
-    let html = "";
-    for (let i = 0; i < types.length; i++) {
-        let type = types[i];
-        let color = typeColors[type] || "#AAA";
-        html += `<span class="pokemon-type" style="background-color:${color}">${type}</span>`;
-    }
-    return html;
 }
 
 async function loadMorePokemon() {
@@ -142,21 +116,6 @@ async function showBigCardByIndex(index) {
     await showBigCard(p.id, p.name, p.imgUrl, p.types, p.bgColor, p.url);
 }
 
-function renderStat(name, value, color) {
-    let percent = Math.min(value, 100);
-    return `
-         <div class="mb-2">
-           <div class="d-flex justify-content-between">
-                <small><strong>${name}</strong></small>
-                <small>${value}</small>
-            </div>
-            <div class="progress rounded-pill" style="height: 12px;">
-                <div class="progress-bar bg-${color}" role="progressbar" style="width: ${percent}%"></div>
-            </div>
-        </div>
-    `;
-}
-
 function nextCard() {
     if (currentIndex < allPokemons.length - 1) {
         currentIndex++;
@@ -165,19 +124,19 @@ function nextCard() {
 }
 
 function prevCard() {
-     if (currentIndex > 0) {
+    if (currentIndex > 0) {
         currentIndex--;
         showBigCardByIndex(currentIndex);
     }
 }
 
 function searchPokemon() {
-    const input = getSearchInput();
-    const container = document.getElementById('pokemonContainer');
-    const loadBtn = document.getElementById('loadMoreBtn');
+    let input = getSearchInput();
+    let container = document.getElementById('pokemonContainer');
+    let loadBtn = document.getElementById('loadMoreBtn');
     if (input.length === 0) { renderAllPokemons(allPokemons); loadBtn.style.display = "block"; return; }
     if (input.length < 3) { showAlert("🔎 Please enter at least 3 letters", "info"); loadBtn.style.display = "none"; return; }
-    const filtered = filterPokemons(input);
+    let filtered = filterPokemons(input);
     if (filtered.length === 0) { showAlert("❌ No Pokemon found", "danger"); loadBtn.style.display = "none"; return; }
     renderAllPokemons(filtered);
 }
@@ -196,17 +155,10 @@ function filterPokemons(input) {
     return allPokemons.filter(p => p.name.toLowerCase().includes(input));
 }
 
-function renderAllPokemons(list) {
-    let container = document.getElementById('pokemonContainer');
-    container.innerHTML = '';
-    list.forEach(p => container.innerHTML += getPokemonCardHTML(p));
-}
-
 function openCardById(id) {
     let container = document.getElementById('overlay');
     let pokemonIndex = allPokemons.findIndex(p => p.id === id);
     if (pokemonIndex === -1) return;
-
     currentIndex = pokemonIndex;
     showBigCardByIndex(currentIndex);
     container.style.display = 'flex';

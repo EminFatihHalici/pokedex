@@ -22,7 +22,7 @@ function buildBigCardHTML({id,name,imgUrl,bgColor,typeHtml,statsHtml}){
         <h2 class="text-capitalize mb-3">${name}</h2>
         <div class="pokemon-types mb-4 d-flex justify-content-center gap-2">${typeHtml}</div>
         <h4 class="mb-2">Stats</h4>
-        <div class="text-start">${statsHtml}</div>
+        <div class="text-start big-card-background">${statsHtml}</div>
         <div class="d-flex justify-content-between mt-3">
             <button class="btn btn-outline-light" onclick="prevCard()">⬅️</button>
             <button class="btn btn-dark" onclick="closeBigCard()">Close</button>

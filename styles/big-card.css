@@ -39,3 +39,10 @@ body.noscroll {
     max-width: 900px;
     padding: 1rem;
 }
+
+.big-card-background {
+  backdrop-filter: blur(4px);
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 8px;
+}

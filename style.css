@@ -15,13 +15,8 @@ h1 {
     color: rgba(33, 37, 41, 0.75) !important;
 }
 
-.card:hover {
-    cursor: pointer;
-}
-
 .pokemon-card {
         transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-        cursor: pointer;
 }
 
 .pokemon-card:hover {

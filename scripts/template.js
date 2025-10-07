@@ -1,8 +1,8 @@
 function getPokemonCardHTML(p) {
     let typeHtml = renderTypes(p.types);
     return `
-        <div class="col pokemon-card">
-            <div class="card p-2 text-center shadow-sm rounded-3 position-relative" 
+        <div class="col crsr-pnt pokemon-card">
+            <div class="p-2 text-center shadow-sm rounded-3 position-relative" 
                 style="background-color:${p.bgColor}" data-url="${p.url}"
                 onclick="showBigCard('${p.id}', '${p.name}', '${p.imgUrl}', '${p.types.join(",")}', '${p.bgColor}', '${p.url}')">
                 <span class="pokemon-id position-absolute top-0 end-0 m-2">#${p.id}</span>
@@ -26,7 +26,6 @@ function buildBigCardHTML({id,name,imgUrl,bgColor,typeHtml,statsHtml}){
         <div class="text-start big-card-background">${statsHtml}</div>
         <div class="d-flex justify-content-between mt-3">
             <button class="btn btn-outline-light" onclick="prevCard()">⬅️</button>
-            
             <button class="btn btn-outline-light" onclick="nextCard()">➡️</button>
         </div>
       </div>

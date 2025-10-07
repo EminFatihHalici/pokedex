@@ -10,3 +10,7 @@
 .noscroll {
     overflow: hidden;
 }
+
+.crsr-pnt {
+    cursor: pointer;
+}

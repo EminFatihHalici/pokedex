@@ -30,11 +30,12 @@ function onloadFunc() {
 }
 
 function closeBigCard(event) {
-    if (!event || event.target.id === "bigCard") {
-        document.getElementById("bigCard").classList.add("d_none");
-        document.body.classList.remove("noscroll");
-    }
+ if (!event || event.currentTarget === event.target) {
+    document.getElementById("bigCard").classList.add("d_none");
+    document.body.classList.remove("noscroll");
+  }
 }
+
 
 function dialogPrevention(event) {
     event.stopPropagation();

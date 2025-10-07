@@ -23,21 +23,6 @@ function renderTypes(types) {
     return html;
 }
 
-function renderStat(name, value, color) {
-    let percent = Math.min(value, 100);
-    return `
-         <div class="mb-2">
-           <div class="d-flex justify-content-between">
-                <small><strong>${name}</strong></small>
-                <small>${value}</small>
-            </div>
-            <div class="progress rounded-pill" style="height: 12px;">
-                <div class="progress-bar bg-${color}" role="progressbar" style="width: ${percent}%"></div>
-            </div>
-        </div>
-    `;
-}
-
 function renderAllPokemons(list) {
     let container = document.getElementById('pokemonContainer');
     container.innerHTML = '';

@@ -46,3 +46,21 @@ body.noscroll {
   border-radius: 12px;
   padding: 8px;
 }
+
+.big-card-template .btn-dark:hover {
+  background-color: #c0392b !important;
+  color: #fff !important;
+  transform: scale(1.05);
+}
+
+.big-card-template .btn-outline-light {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.big-card-template .btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+  color: #000;
+  transform: scale(1.05);
+}
+

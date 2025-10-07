@@ -17,7 +17,8 @@ function getPokemonCardHTML(p) {
 function buildBigCardHTML({id,name,imgUrl,bgColor,typeHtml,statsHtml}){
     return `
       <div class="card shadow-lg p-4 text-center position-relative mx-auto" style="background-color:${bgColor}; max-width:600px;width:100%;">
-        <span class="pokemon-id position-absolute top-0 end-0 m-2">#${id}</span>
+        <span class="pokemon-id position-absolute top-0 start-0 m-2">#${id}</span>
+        <button class="btn btn-dark btn-sm position-absolute top-0 end-0 m-2" onclick="closeBigCard()">X</button>
         <img class="pokemon-image mx-auto d-block mb-3" src="${imgUrl}" alt="${name}" style="max-height:250px;">
         <h2 class="text-capitalize mb-3">${name}</h2>
         <div class="pokemon-types mb-4 d-flex justify-content-center gap-2">${typeHtml}</div>
@@ -25,7 +26,7 @@ function buildBigCardHTML({id,name,imgUrl,bgColor,typeHtml,statsHtml}){
         <div class="text-start big-card-background">${statsHtml}</div>
         <div class="d-flex justify-content-between mt-3">
             <button class="btn btn-outline-light" onclick="prevCard()">⬅️</button>
-            <button class="btn btn-dark" onclick="closeBigCard()">Close</button>
+            
             <button class="btn btn-outline-light" onclick="nextCard()">➡️</button>
         </div>
       </div>

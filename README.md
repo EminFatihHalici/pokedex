@@ -3,12 +3,12 @@
 A fast and responsive web application that fetches and displays data from the PokéAPI. This project demonstrates modern JavaScript techniques for data handling and UI rendering.
 
 ## 🚀 Live Demo
-https://emin-fatih-halici.developerakademie.net/pokedex/index.html
+ https://emin-fatih-halici.developerakademie.net/pokedex/index.html
 
 ## 🛠️ Tech Stack
+- **Frontend:** HTML5, CSS3, **Bootstrap 5** (Responsive Grid & Cards)
 - **Language:** JavaScript (ES6+)
 - **API:** PokéAPI (RESTful API)
-- **Frontend:** HTML5, CSS3
 
 ## 🌟 Key Features
 - **Asynchronous Data Fetching:** Efficient use of `fetch`, `async/await`, and Promise handling to load Pokémon data.
